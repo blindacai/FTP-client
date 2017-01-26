@@ -10,7 +10,8 @@ import java.io.IOException;
 
 public class CSftp
 {
-    static final int MAX_LEN = 255;
+    // test comment
+	static final int MAX_LEN = 255;
     static final int ARG_CNT = 2;
 
     public static void main(String [] args)
