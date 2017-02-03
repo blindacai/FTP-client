@@ -21,11 +21,14 @@ public class MainFTP {
 
         while((fromServer = kkSocket.getin().readLine()) != null){
             System.out.println(fromServer);
+            System.out.print("csftp> ");
             fromUser = stdIn.readLine();
             command.setUserinput(fromUser);
             if(command.commandNeed()){
                 kkSocket.getout().println(command.getFTPcommand());
             }
+
         }
+
     }
 }

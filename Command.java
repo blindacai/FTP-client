@@ -8,7 +8,6 @@ public class Command {
     private String userinput_command = null;
     private String userinput_var = null;
     private Map map;
-    private String FTPcommand;
 
     public Command(){
         this.buildMap();
