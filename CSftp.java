@@ -42,7 +42,6 @@ public class CSftp
 
 
         String hostName = args[0];
-
         try (
                 Socket kkSocket = new Socket(hostName, portNumber);
                 PrintWriter out = new PrintWriter(kkSocket.getOutputStream(), true);
@@ -55,11 +54,17 @@ public class CSftp
             String fromUser;
 
             while((fromServer = in.readLine()) != null){
-                System.out.println("this is in" + fromServer);
+                System.out.println(fromServer);
                 fromUser = stdIn.readLine();
-                if(fromUser.equals("user")){
-                    out.println("user anonymous");    // the line to feed user input to ftp server through socket
+                System.out.println(fromUser.split(" ")[3]);
+                if(fromUser.split(" ").length == 2){
+                    out.println("PASV"); // the line to feed user input to ftp server through socket
+                }else if(fromUser.equals("user")){
+                    out.println("user anonymous");
+                }else if(fromUser.equals("pass")){
+                    out.println("pass aaa");
                 }
+
             }
 
             /*
