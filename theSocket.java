@@ -19,6 +19,7 @@ public class theSocket {
         this.port = port;
     }
 
+    // may need try catch to deal with exceptions
     public void createSocket() throws IOException {
         this.kkSocket = new Socket(this.addr, this.port);
         out = new PrintWriter(kkSocket.getOutputStream(), true);

@@ -15,14 +15,16 @@ public class MainFTP {
 
         String fromServer;
         String fromUser;
+        Command command = new Command();
 
         BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));  // accept user input
 
         while((fromServer = kkSocket.getin().readLine()) != null){
             System.out.println(fromServer);
             fromUser = stdIn.readLine();
-            if(fromUser.equals("user")){
-                kkSocket.getout().println("user anonymous");
+            command.setUserinput(fromUser);
+            if(command.commandNeed()){
+                kkSocket.getout().println(command.getFTPcommand());
             }
         }
     }
