@@ -18,7 +18,7 @@ public class Command {
         if(inputs.length > 1){
             this.userinput_var = inputs[1];
         }
-        this.userinput_command = inputs[0];
+        this.userinput_command = inputs[0].toLowerCase();
     }
 
     public void buildMap(){
@@ -35,6 +35,8 @@ public class Command {
     }
 
     public String getFTPcommand(){
-        return this.map.get(this.userinput_command) + " " + this.userinput_var;
+        String temp = this.map.get(this.userinput_command).toString().toUpperCase() + ( (this.userinput_var == null)? "" : " " + this.userinput_var );
+        this.userinput_var = null;
+        return temp;
     }
 }
