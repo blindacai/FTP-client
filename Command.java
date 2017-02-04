@@ -28,6 +28,12 @@ public class Command {
         map.put("quit", "quit");
         map.put("features", "feat");
         map.put("cd", "cwd");
+        map.put("dir", "list");
+        map.put("get", "retr");
+    }
+
+    public boolean specialCommand(String userinput){
+        return (userinput.equals("get")) || (userinput.equals("dir"));
     }
 
     public boolean commandNeed(){
