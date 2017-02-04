@@ -19,16 +19,19 @@ public class MainFTP {
 
         BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));  // accept user input
 
-        while((fromServer = kkSocket.getin().readLine()) != null){
-            System.out.println(fromServer);
+        while(true){
+            do{
+                fromServer = kkSocket.getin().readLine();
+                System.out.println(fromServer);
+            }while(Utils.notlastline(fromServer));
+
             System.out.print("csftp> ");
             fromUser = stdIn.readLine();
             command.setUserinput(fromUser);
+
             if(command.commandNeed()){
                 kkSocket.getout().println(command.getFTPcommand());
             }
-
         }
-
     }
 }
