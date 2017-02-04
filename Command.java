@@ -28,6 +28,16 @@ public class Command {
         map.put("quit", "quit");
         map.put("features", "feat");
         map.put("cd", "cwd");
+        map.put("dir", "pasv");
+        map.put("get", "pasv");
+    }
+
+    public boolean needNewSocket(String userCmd) {
+        return (userCmd.toUpperCase().equals("DIR") || userCmd.toUpperCase().equals("GET"));
+    }
+
+    public String getUserinput_command() {
+        return userinput_command;
     }
 
     public boolean commandNeed(){
@@ -35,7 +45,8 @@ public class Command {
     }
 
     public String getFTPcommand(){
-        String temp = this.map.get(this.userinput_command).toString().toUpperCase() + ( (this.userinput_var == null)? "" : " " + this.userinput_var );
+        String temp = this.map.get(this.userinput_command).toString().toUpperCase() + ( (this.userinput_var == null)? ""
+                : " " + this.userinput_var );
         this.userinput_var = null;
         return temp;
     }

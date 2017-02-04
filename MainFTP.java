@@ -25,7 +25,16 @@ public class MainFTP {
             fromUser = stdIn.readLine();
             command.setUserinput(fromUser);
             if(command.commandNeed()){
+                System.out.print("--> ");
                 kkSocket.getout().println(command.getFTPcommand());
+                if(command.needNewSocket(command.getUserinput_command())){
+                    System.out.println("build a new socket");
+                } else {
+                    System.out.println(command.getUserinput_command());
+                    System.out.println("dont build 1");
+                }
+            } else {
+                kkSocket.getout().println();
             }
 
         }
