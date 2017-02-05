@@ -12,17 +12,17 @@ public class MainFTP {
         int port = 21;
         theSocket kkSocket = new theSocket(hostname, port);
         kkSocket.createSocket();
-
-        String fromServer;
-        String fromUser;
         Command command = new Command();
+        fromServer server = new fromServer(kkSocket, command);
 
         BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));  // accept user input
 
-        while((fromServer = kkSocket.getin().readLine()) != null){
-            System.out.println(fromServer);
+        server.printResponse();
+        String fromUser;
+        while(true){
             System.out.print("csftp> ");
             fromUser = stdIn.readLine();
+
             command.setUserinput(fromUser);
             if(command.commandNeed()){
                 System.out.print("--> ");
@@ -37,7 +37,7 @@ public class MainFTP {
                 kkSocket.getout().println();
             }
 
-        }
 
+        }
     }
 }

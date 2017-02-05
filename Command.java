@@ -18,7 +18,7 @@ public class Command {
         if(inputs.length > 1){
             this.userinput_var = inputs[1];
         }
-        this.userinput_command = inputs[0].toLowerCase();
+        this.userinput_command = inputs[0];
     }
 
     public void buildMap(){
@@ -28,6 +28,7 @@ public class Command {
         map.put("quit", "quit");
         map.put("features", "feat");
         map.put("cd", "cwd");
+<<<<<<< HEAD
         map.put("dir", "pasv");
         map.put("get", "pasv");
     }
@@ -40,13 +41,18 @@ public class Command {
         return userinput_command;
     }
 
-    public boolean commandNeed(){
-        return this.map.containsKey(this.userinput_command);
+    public boolean specialCommand(String userinput){
+        return (userinput.equals("get")) || (userinput.equals("dir"));
+    }
+
+    public boolean commandExist(String userinput){
+        return this.map.containsKey(userinput);
     }
 
     public String getFTPcommand(){
         String temp = this.map.get(this.userinput_command).toString().toUpperCase() + ( (this.userinput_var == null)? ""
                 : " " + this.userinput_var );
+
         this.userinput_var = null;
         return temp;
     }
