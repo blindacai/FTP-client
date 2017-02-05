@@ -28,7 +28,6 @@ public class Command {
         map.put("quit", "quit");
         map.put("features", "feat");
         map.put("cd", "cwd");
-<<<<<<< HEAD
         map.put("dir", "pasv");
         map.put("get", "pasv");
     }

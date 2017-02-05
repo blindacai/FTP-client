@@ -32,11 +32,19 @@ public class fromServer {
     public void takeInput(String userInput) throws IOException {
         if(!command.specialCommand(userInput)){
             command.setUserinput(userInput);
-            kkSocket.getout().println(command.getFTPcommand());
-            printResponse();
+            if(command.commandExist(command.getUserinput_command())){
+                kkSocket.getout().println(command.getFTPcommand());
+                printResponse();
+            } else {
+                System.out.println("0x001 Invalid command.");
+                kkSocket.getout().println();
+            }
         }
         else if(command.commandExist(userInput)){
             specialInput(userInput);
+        } else {
+            System.out.println(command.commandExist(userInput));
+            System.out.println("error");
         }
     }
 
