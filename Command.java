@@ -40,6 +40,10 @@ public class Command {
         return userinput_command;
     }
 
+    public String getUserinput_var(){
+        return userinput_var;
+    }
+
     public boolean specialCommand(String userinput){
         return (userinput.equals("get")) || (userinput.equals("dir"));
     }

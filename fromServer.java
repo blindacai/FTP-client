@@ -1,4 +1,6 @@
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by linda on 2/4/2017.
@@ -33,8 +35,35 @@ public class fromServer {
         if(!command.specialCommand(userInput)){
             command.setUserinput(userInput);
             if(command.commandExist(command.getUserinput_command())){
-                kkSocket.getout().println(command.getFTPcommand());
-                printResponse();
+                switch(command.getUserinput_command()){
+                    case "dir":
+                    case "quit":
+                    case "features":
+                        if(userInput.split(" ").length != 1){
+                            System.out.println("0x002 Incorrect number of arguments.");
+                            kkSocket.getout().println();
+                            break;
+                        } else {
+                            kkSocket.getout().println(command.getFTPcommand());
+                            printResponse();
+                            break;
+                        }
+                    case "user":
+                    case "pw":
+                    case "get":
+                    case "cd":
+                        if(userInput.split(" ").length != 2){
+                            System.out.println("0x002 Incorrect number of arguments.");
+                            kkSocket.getout().println();
+                            break;
+                        } else {
+                            kkSocket.getout().println(command.getFTPcommand());
+                            printResponse();
+                            break;
+                        }
+                    default:
+                        break;
+                }
             } else {
                 System.out.println("0x001 Invalid command.");
                 kkSocket.getout().println();
