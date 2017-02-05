@@ -15,7 +15,15 @@ public class Utils {
             return false;
     }
 
-    public static Matcher getMatch(String pattern, String response){
+    public static String IPandPort(String response){
+        Matcher matcher = getMatch("\\((.*?)\\)", response);
+        if(matcher.find()){
+            return matcher.group(1);
+        }
+        else return null;
+    }
+
+    private static Matcher getMatch(String pattern, String response){
         Pattern apattern = Pattern.compile(pattern);
         return apattern.matcher(response);
     }

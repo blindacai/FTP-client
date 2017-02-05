@@ -12,16 +12,14 @@ public class MainFTP {
         int port = 21;
         theSocket kkSocket = new theSocket(hostname, port);
         kkSocket.createSocket();
-
-        String fromUser;
         Command command = new Command();
+        fromServer server = new fromServer(kkSocket, command);
 
         BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));  // accept user input
 
-        fromServer server = new fromServer(kkSocket, command);
-
+        server.printResponse();
+        String fromUser;
         while(true){
-            server.printResponse();
             System.out.print("csftp> ");
             fromUser = stdIn.readLine();
             server.takeInput(fromUser);

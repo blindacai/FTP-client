@@ -18,7 +18,7 @@ public class Command {
         if(inputs.length > 1){
             this.userinput_var = inputs[1];
         }
-        this.userinput_command = inputs[0].toLowerCase();
+        this.userinput_command = inputs[0];
     }
 
     public void buildMap(){
@@ -36,8 +36,8 @@ public class Command {
         return (userinput.equals("get")) || (userinput.equals("dir"));
     }
 
-    public boolean commandNeed(){
-        return this.map.containsKey(this.userinput_command);
+    public boolean commandExist(String userinput){
+        return this.map.containsKey(userinput);
     }
 
     public String getFTPcommand(){
