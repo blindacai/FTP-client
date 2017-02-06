@@ -22,7 +22,7 @@ public class Utils {
 
     /*
         argv: server response
-        return "142,103,6,49,227,166 of 227" part of passive mode response
+        return "142,103,6,49,227,166,227" part of passive mode response
      */
     public static String IPandPort(String response){
         Matcher matcher = getMatch("\\((.*?)\\)", response);

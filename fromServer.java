@@ -22,7 +22,7 @@ public class fromServer {
         String serverResponse;
         do{
             serverResponse = kkSocket.getin().readLine();
-            System.out.println(serverResponse);
+            System.out.println("<--" + serverResponse);
         }while(Utils.notlastline(serverResponse));
     }
 
@@ -32,7 +32,7 @@ public class fromServer {
     private void printSpecial(theSocket second_socket) throws IOException {
         String serverReponse;
         while(( serverReponse = second_socket.getin().readLine() ) != null){
-            System.out.println(serverReponse);
+            System.out.println("<--" + serverReponse);
         }
     }
 
@@ -41,12 +41,15 @@ public class fromServer {
      */
     public void takeInput(String userInput) throws IOException {
         command.setUserinput(userInput);
+        String userinput_command = command.getUserinput_command();
+        String ftp_command = command.getFTPcommand();
+        System.out.println("-->" + ftp_command.toUpperCase());
 
-        if(!command.specialCommand(command.getUserinput_command())){
-            kkSocket.getout().println(command.getFTPcommand());
+        if(!command.specialCommand(userinput_command)){
+            kkSocket.getout().println(ftp_command);
             printResponse();
         }
-        else if(command.commandExist(command.getUserinput_command())){
+        else if(command.commandExist(userinput_command)){
             specialInput(userInput);
         }
     }
@@ -56,6 +59,7 @@ public class fromServer {
         when user input is "dir" or "get"
      */
     private void specialInput(String userInput) throws IOException {
+        command.setUserinput(userInput);
         kkSocket.getout().println(PASV);
         String serverRes = kkSocket.getin().readLine();
         String[] info = Utils.IPandPort(serverRes).split(",");
