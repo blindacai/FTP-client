@@ -67,21 +67,7 @@ public class fromServer {
         }
         printResponse();
     }
-
-    /*
-    private void getFile(theSocket second_socket, String userInput) throws IOException {
-        command.setUserinput(userInput);
-        OutputStream oos = new FileOutputStream(new File("./" + command.getUserinput_var()));
-        byte[] buf = new byte[10];
-        int offset = 0;
-        while ((offset = second_socket.getKkSocket().getInputStream().read(buf, 0, buf.length)) > 0) {
-            oos.write(buf, 0, offset);
-            oos.flush();
-        }
-        oos.close();
-    }
-    */
-
+    
     private void getFile(theSocket second_socket, String userInput) throws IOException {
         command.setUserinput(userInput);
         OutputStream oos = new FileOutputStream(new File("./" + command.getUserinput_var()));
