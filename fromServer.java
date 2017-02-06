@@ -67,7 +67,7 @@ public class fromServer {
         }
         printResponse();
     }
-    
+
     private void getFile(theSocket second_socket, String userInput) throws IOException {
         command.setUserinput(userInput);
         OutputStream oos = new FileOutputStream(new File("./" + command.getUserinput_var()));

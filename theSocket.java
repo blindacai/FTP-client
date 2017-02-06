@@ -34,8 +34,4 @@ public class theSocket {
     public BufferedReader getin(){
         return this.in;
     }
-
-    public Socket getKkSocket(){
-        return this.kkSocket;
-    }
 }
