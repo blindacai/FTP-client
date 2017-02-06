@@ -50,7 +50,7 @@ public class fromServer {
         String userinput_var = command.getUserinput_var();
         String ftp_command = command.getFTPcommand();
 
-        System.out.println("--> " + userinput_command.toUpperCase() + " " + userinput_var);
+        System.out.println("--> " + userinput_command.toUpperCase() + (userinput_var != null? " " + userinput_var : ""));
 
         if(!command.specialCommand(userinput_command)){
             kkSocket.getout().println(ftp_command);
