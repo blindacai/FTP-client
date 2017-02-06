@@ -35,12 +35,8 @@ public class Command {
         map.put("quit", "quit");
         map.put("features", "feat");
         map.put("cd", "cwd");
-        map.put("dir", "pasv");
-        map.put("get", "pasv");
-    }
-
-    public boolean needNewSocket(String userCmd) {
-        return (userCmd.toUpperCase().equals("DIR") || userCmd.toUpperCase().equals("GET"));
+        map.put("dir", "list");
+        map.put("get", "retr");
     }
 
     /*

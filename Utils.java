@@ -39,4 +39,29 @@ public class Utils {
         Pattern apattern = Pattern.compile(pattern);
         return apattern.matcher(response);
     }
+
+    /*
+        return true when the number of arguments provided by the user is correct, false otherwise
+     */
+    public static boolean argumentChecker(String userInput){
+        String[] inputs = userInput.split(" ");
+        int length = inputs.length;
+        String command = inputs[0];
+        boolean result = false;
+
+        switch(command){
+            case "dir":
+            case "quit":
+            case "features":
+                result = (length == 1);
+                return result;
+            case "user":
+            case "pw":
+            case "get":
+            case "cd":
+                result = (length == 2);
+                return result;
+        }
+        return result;
+    }
 }

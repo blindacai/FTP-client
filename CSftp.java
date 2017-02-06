@@ -27,16 +27,23 @@ public class CSftp {
 
         BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));  // accept user input
 
-        System.out.print("<-- ");
         server.printResponse();
         String fromUser;
         while(true){
             System.out.print("csftp> ");
             fromUser = stdIn.readLine();
-            server.takeInput(fromUser);
-            if(server.getCommand().getUserinput_command().equals("quit")){
+
+            if( !command.commandExist(fromUser.split(" ")[0]) )
+                System.out.println("0x001 Invalid command.");
+
+            else if( !Utils.argumentChecker(fromUser) )
+                System.out.println("0x002 Incorrect number of arguments.");
+
+            else if(fromUser.equals("quit")){
                 break;
             }
+
+            else server.takeInput(fromUser);
         }
     }
 }
