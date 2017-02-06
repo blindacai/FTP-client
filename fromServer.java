@@ -26,7 +26,7 @@ public class fromServer {
         String serverResponse;
         do{
             serverResponse = kkSocket.getin().readLine();
-            System.out.println("<--" + serverResponse);
+            System.out.println("<-- " + serverResponse);
         }while(Utils.notlastline(serverResponse));
     }
 
@@ -36,7 +36,7 @@ public class fromServer {
     private void printSpecial(theSocket second_socket) throws IOException {
         String serverReponse;
         while(( serverReponse = second_socket.getin().readLine() ) != null){
-            System.out.println("<--" + serverReponse);
+            System.out.println(serverReponse);
         }
     }
 
@@ -45,9 +45,12 @@ public class fromServer {
      */
     public void takeInput(String userInput) throws IOException {
         command.setUserinput(userInput);
+
         String userinput_command = command.getUserinput_command();
+        String userinput_var = command.getUserinput_var();
         String ftp_command = command.getFTPcommand();
-        System.out.println("-->" + ftp_command.toUpperCase());
+
+        System.out.println("--> " + userinput_command.toUpperCase() + " " + userinput_var);
 
         if(!command.specialCommand(userinput_command)){
             kkSocket.getout().println(ftp_command);
