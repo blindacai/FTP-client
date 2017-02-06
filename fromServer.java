@@ -20,9 +20,16 @@ public class fromServer {
         deal with multi-line response
      */
     public void printResponse() throws IOException {
-        String serverResponse;
+        String serverResponse = "";
         do{
-            serverResponse = kkSocket.getin().readLine();
+            try{
+                serverResponse = kkSocket.getin().readLine();
+            }catch(IOException e){
+                System.out.println("0xFFFD Control connection I/O error, closing control connection.");
+                kkSocket.getKkSocket().close();
+                System.exit(0);
+            }
+
             System.out.println("<-- " + serverResponse);
         }while(Utils.notlastline(serverResponse));
     }
@@ -56,7 +63,6 @@ public class fromServer {
         else specialInput(userInput);
     }
 
-
     /*
         when user input is "dir" or "get"
      */
@@ -68,7 +74,12 @@ public class fromServer {
 
         // a second socket
         theSocket second_socket = new theSocket(getIP(info), getPort(info));
-        second_socket.createSocket();
+        try{
+            second_socket.createSocket();
+        }catch(IOException e){
+            System.out.println("0x3A2 Data transfer connection to " + getIP(info) + " " + getPort(info) + " failed to open.");
+            System.exit(0);
+        }
 
         // switch to binary mode
         kkSocket.getout().println("type I");
@@ -97,7 +108,14 @@ public class fromServer {
             oos = new FileOutputStream(new File("./" + command.getUserinput_var()));
             byte[] buf = new byte[10];
             int offset = 0;
-            while ((offset = second_socket.getinputstream().read(buf, 0, buf.length)) > 0) {
+            while (offset > 0) {
+                try{
+                    offset = second_socket.getinputstream().read(buf, 0, buf.length);
+                }catch(IOException e){
+                    System.out.println("0x3A7 Data transfer connection I/O error, closing data connection.");
+                    second_socket.getKkSocket().close();
+                    break;
+                }
                 oos.write(buf, 0, offset);
                 oos.flush();
             }

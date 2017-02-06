@@ -35,10 +35,16 @@ public class CSftp {
         BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));  // accept user input
 
         server.printResponse();
-        String fromUser;
+        String fromUser = "";
         while(true){
             System.out.print("csftp> ");
-            fromUser = stdIn.readLine();
+
+            try{
+                fromUser = stdIn.readLine();
+            }catch(IOException e){
+                System.out.println("0xFFFE Input error while reading commands, terminating.");
+                System.exit(0);
+            }
 
             if( !command.commandExist(fromUser) )
                 System.out.println("0x001 Invalid command.");

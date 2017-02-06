@@ -37,4 +37,9 @@ public class theSocket {
     public InputStream getinputstream() throws IOException {
         return kkSocket.getInputStream();
     }
+
+    public Socket getKkSocket(){
+        return this.kkSocket;
+    }
+
 }
