@@ -6,6 +6,11 @@ import java.util.regex.Pattern;
  */
 public class Utils {
 
+    /*
+        check if the current response is the last response
+        argv: server response
+        return true if it's not, false if it is
+     */
     public static Boolean notlastline(String response){
         if(!getMatch("(\\d\\d\\d)", response).find())
             return true;
@@ -15,6 +20,10 @@ public class Utils {
             return false;
     }
 
+    /*
+        argv: server response
+        return "142,103,6,49,227,166 of 227" part of passive mode response
+     */
     public static String IPandPort(String response){
         Matcher matcher = getMatch("\\((.*?)\\)", response);
         if(matcher.find()){
@@ -23,6 +32,9 @@ public class Utils {
         else return null;
     }
 
+    /*
+        regular expression helper function
+     */
     private static Matcher getMatch(String pattern, String response){
         Pattern apattern = Pattern.compile(pattern);
         return apattern.matcher(response);

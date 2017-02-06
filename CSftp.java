@@ -10,6 +10,9 @@ public class CSftp {
         String hostname= null;
         int port;
 
+        /*
+            default port is 21 if not specified
+         */
         try{
             hostname = args[0];
             port = Integer.parseInt(args[1]);

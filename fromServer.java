@@ -14,6 +14,10 @@ public class fromServer {
         this.command = command;
     }
 
+    /*
+        print server response
+        deal with multi-line response
+     */
     public void printResponse() throws IOException {
         String serverResponse;
         do{
@@ -22,6 +26,9 @@ public class fromServer {
         }while(Utils.notlastline(serverResponse));
     }
 
+    /*
+        print server response of command "dir"
+     */
     private void printSpecial(theSocket second_socket) throws IOException {
         String serverReponse;
         while(( serverReponse = second_socket.getin().readLine() ) != null){
@@ -29,6 +36,9 @@ public class fromServer {
         }
     }
 
+    /*
+        feed user input to ftp server
+     */
     public void takeInput(String userInput) throws IOException {
         command.setUserinput(userInput);
 
@@ -42,6 +52,9 @@ public class fromServer {
     }
 
 
+    /*
+        when user input is "dir" or "get"
+     */
     private void specialInput(String userInput) throws IOException {
         kkSocket.getout().println(PASV);
         String serverRes = kkSocket.getin().readLine();
@@ -68,6 +81,9 @@ public class fromServer {
         printResponse();
     }
 
+    /*
+        transfer file to local machine
+     */
     private void getFile(theSocket second_socket, String userInput) throws IOException {
         command.setUserinput(userInput);
         OutputStream oos = new FileOutputStream(new File("./" + command.getUserinput_var()));
@@ -79,6 +95,10 @@ public class fromServer {
         oos.close();
     }
 
+    /*
+        parse ip from pasv mode response
+        return ip address for the second data connection
+     */
     private String getIP(String[] info){
         String ip = "";
         for(int i = 0; i < 3; i++){
@@ -87,6 +107,10 @@ public class fromServer {
         return ip + info[3];
     }
 
+    /*
+        parse port from pasv mode response
+        return port number
+     */
     private int getPort(String[] info){
         return Integer.parseInt(info[4])*256 + Integer.parseInt(info[5]);
     }

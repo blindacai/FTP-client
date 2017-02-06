@@ -13,6 +13,10 @@ public class Command {
         this.buildMap();
     }
 
+    /*
+        parse user input to two part: command eg: user, pw, dir
+                                      variable eg: username, filename
+     */
     public void setUserinput(String userinput){
         String[] inputs = userinput.split(" ");
         if(inputs.length > 1){
@@ -21,6 +25,9 @@ public class Command {
         this.userinput_command = inputs[0];
     }
 
+    /*
+        map user input to ftp command
+     */
     public void buildMap(){
         this.map = new HashMap<String, String>();
         map.put("user", "user");
@@ -32,14 +39,23 @@ public class Command {
         map.put("get", "retr");
     }
 
+    /*
+        check whether command needs extra data connection; return true if it does, otherwise false
+     */
     public boolean specialCommand(String userinput){
         return (userinput.equals("get")) || (userinput.equals("dir"));
     }
 
+    /*
+        check whether user input belongs to a valid command; return true if it does, otherwise false
+     */
     public boolean commandExist(String userinput){
         return this.map.containsKey(userinput);
     }
 
+    /*
+        return ftp command
+     */
     public String getFTPcommand(){
         String temp = this.map.get(this.userinput_command) + ( (this.userinput_var == null)? "" : " " + this.userinput_var );
         this.userinput_var = null;
