@@ -1,6 +1,7 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.ConnectException;
 import java.net.UnknownHostException;
 
 /**
@@ -25,9 +26,11 @@ public class CSftp {
         try{
             kkSocket.createSocket();
         }catch(UnknownHostException e){
-            System.out.println("0xFFFC Control connection to " + hostname + " on port " + port + " failed to open");
-            System.exit(0);
+            handleException(hostname, port);
+        }catch(ConnectException e){
+            handleException(hostname, port);
         }
+
 
         Command command = new Command();
         fromServer server = new fromServer(kkSocket, command);
@@ -58,5 +61,10 @@ public class CSftp {
 
             else server.takeInput(fromUser);
         }
+    }
+
+    public static void handleException(String hostname, int port){
+        System.out.println("0xFFFC Control connection to " + hostname + " on port " + port + " failed to open");
+        System.exit(0);
     }
 }
