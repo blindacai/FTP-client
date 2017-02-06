@@ -36,14 +36,6 @@ public class Command {
         return (userCmd.toUpperCase().equals("DIR") || userCmd.toUpperCase().equals("GET"));
     }
 
-    public String getUserinput_command() {
-        return userinput_command;
-    }
-
-    public String getUserinput_var(){
-        return userinput_var;
-    }
-
     public boolean specialCommand(String userinput){
         return (userinput.equals("get")) || (userinput.equals("dir"));
     }
@@ -58,5 +50,13 @@ public class Command {
 
         this.userinput_var = null;
         return temp;
+    }
+
+    public String getUserinput_command(){
+        return this.userinput_command;
+    }
+
+    public String getUserinput_var(){
+        return this.userinput_var;
     }
 }

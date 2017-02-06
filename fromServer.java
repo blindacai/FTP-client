@@ -1,6 +1,9 @@
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.OutputStream;
+
+
 
 /**
  * Created by linda on 2/4/2017.
@@ -69,13 +72,14 @@ public class fromServer {
                 kkSocket.getout().println();
             }
         }
-        else if(command.commandExist(userInput)){
+        else if(command.commandExist(command.getUserinput_command())){
             specialInput(userInput);
         } else {
             System.out.println(command.commandExist(userInput));
             System.out.println("error");
         }
     }
+
 
     private void specialInput(String userInput) throws IOException {
         kkSocket.getout().println(PASV);
@@ -87,12 +91,28 @@ public class fromServer {
         second_socket.createSocket();
 
         // send a second command
-        command.setUserinput(userInput);
         kkSocket.getout().println(command.getFTPcommand());
 
         printResponse();
-        printSpecial(second_socket);
+        if(command.getUserinput_command().equals("dir")){
+            printSpecial(second_socket);
+        }
+        else{
+            getFile(second_socket, userInput);
+        }
         printResponse();
+    }
+
+    private void getFile(theSocket second_socket, String userInput) throws IOException {
+        command.setUserinput(userInput);
+        second_socket.getout().println("type i");
+        OutputStream oos = new FileOutputStream(new File(".\\" + command.getUserinput_var()));
+        int serverReponse;
+        while(( serverReponse = second_socket.getin().read() ) > -1){
+            oos.write((byte) serverReponse);
+            oos.flush();
+        }
+        oos.close();
     }
 
     private String getIP(String[] info){
