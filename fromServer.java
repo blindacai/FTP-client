@@ -38,38 +38,9 @@ public class fromServer {
         if(!command.specialCommand(userInput)){
             command.setUserinput(userInput);
             if(command.commandExist(command.getUserinput_command())){
-                switch(command.getUserinput_command()){
-                    case "dir":
-                    case "quit":
-                    case "features":
-                        if(userInput.split(" ").length != 1){
-                            System.out.println("0x002 Incorrect number of arguments.");
-                            kkSocket.getout().println();
-                            break;
-                        } else {
-                            kkSocket.getout().println(command.getFTPcommand());
-                            printResponse();
-                            break;
-                        }
-                    case "user":
-                    case "pw":
-                    case "get":
-                    case "cd":
-                        if(userInput.split(" ").length != 2){
-                            System.out.println("0x002 Incorrect number of arguments.");
-                            kkSocket.getout().println();
-                            break;
-                        } else {
-                            kkSocket.getout().println(command.getFTPcommand());
-                            printResponse();
-                            break;
-                        }
-                    default:
-                        break;
-                }
+                argumentChecker(userInput);
             } else {
                 System.out.println("0x001 Invalid command.");
-                kkSocket.getout().println();
             }
         }
         else if(command.commandExist(command.getUserinput_command())){
@@ -77,6 +48,36 @@ public class fromServer {
         } else {
             System.out.println(command.commandExist(userInput));
             System.out.println("error");
+        }
+    }
+
+    private void argumentChecker(String userInput) throws IOException {
+        switch(command.getUserinput_command()){
+            case "dir":
+            case "quit":
+            case "features":
+                if(userInput.split(" ").length != 1){
+                    System.out.println("0x002 Incorrect number of arguments.");
+                    break;
+                } else {
+                    kkSocket.getout().println(command.getFTPcommand());
+                    printResponse();
+                    break;
+                }
+            case "user":
+            case "pw":
+            case "get":
+            case "cd":
+                if(userInput.split(" ").length != 2){
+                    System.out.println("0x002 Incorrect number of arguments.");
+                    break;
+                } else {
+                    kkSocket.getout().println(command.getFTPcommand());
+                    printResponse();
+                    break;
+                }
+            default:
+                break;
         }
     }
 
