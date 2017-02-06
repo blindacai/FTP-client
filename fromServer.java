@@ -1,4 +1,9 @@
-import java.io.*;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+
+
 
 /**
  * Created by linda on 2/4/2017.
@@ -49,9 +54,7 @@ public class fromServer {
             kkSocket.getout().println(ftp_command);
             printResponse();
         }
-        else if(command.commandExist(userinput_command)){
-            specialInput(userInput);
-        }
+        else specialInput(userInput);
     }
 
 
@@ -86,14 +89,15 @@ public class fromServer {
     }
 
     /*
-        transfer file to local machine
-     */
+    transfer file to local machine
+    */
     private void getFile(theSocket second_socket, String userInput) throws IOException {
         command.setUserinput(userInput);
         OutputStream oos = new FileOutputStream(new File("./" + command.getUserinput_var()));
-        int reading;
-        while(( reading = second_socket.getin().read() ) > -1){
-            oos.write((byte) reading);
+        byte[] buf = new byte[10];
+        int offset = 0;
+        while ((offset = second_socket.getinputstream().read(buf, 0, buf.length)) > 0) {
+            oos.write(buf, 0, offset);
             oos.flush();
         }
         oos.close();
@@ -117,5 +121,9 @@ public class fromServer {
      */
     private int getPort(String[] info){
         return Integer.parseInt(info[4])*256 + Integer.parseInt(info[5]);
+    }
+
+    public Command getCommand(){
+        return this.command;
     }
 }
