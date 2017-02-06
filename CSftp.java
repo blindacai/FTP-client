@@ -33,7 +33,7 @@ public class CSftp {
             System.out.print("csftp> ");
             fromUser = stdIn.readLine();
 
-            if( !command.commandExist(fromUser.split(" ")[0]) )
+            if( !command.commandExist(fromUser) )
                 System.out.println("0x001 Invalid command.");
 
             else if( !Utils.argumentChecker(fromUser) )

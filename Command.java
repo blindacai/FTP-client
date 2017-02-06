@@ -50,7 +50,7 @@ public class Command {
         check whether user input belongs to a valid command; return true if it does, otherwise false
      */
     public boolean commandExist(String userinput){
-        return this.map.containsKey(userinput);
+        return this.map.containsKey(userinput.split(" ")[0]);
     }
 
     /*
