@@ -17,12 +17,16 @@ public class CSftp {
 
         BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));  // accept user input
 
+        System.out.print("<-- ");
         server.printResponse();
         String fromUser;
         while(true){
             System.out.print("csftp> ");
             fromUser = stdIn.readLine();
             server.takeInput(fromUser);
+            if(server.getCommand().getUserinput_command().equals("quit")){
+                break;
+            }
         }
     }
 }

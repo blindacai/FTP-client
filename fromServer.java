@@ -52,6 +52,7 @@ public class fromServer {
     }
 
     private void argumentChecker(String userInput) throws IOException {
+        String myFTPcommand = command.getFTPcommand();
         switch(command.getUserinput_command()){
             case "dir":
             case "quit":
@@ -60,7 +61,10 @@ public class fromServer {
                     System.out.println("0x002 Incorrect number of arguments.");
                     break;
                 } else {
-                    kkSocket.getout().println(command.getFTPcommand());
+                    System.out.print("--> ");
+                    System.out.println(myFTPcommand);
+                    kkSocket.getout().println(myFTPcommand);
+                    System.out.print("<-- ");
                     printResponse();
                     break;
                 }
@@ -72,7 +76,10 @@ public class fromServer {
                     System.out.println("0x002 Incorrect number of arguments.");
                     break;
                 } else {
-                    kkSocket.getout().println(command.getFTPcommand());
+                    System.out.print("--> ");
+                    System.out.println(myFTPcommand);
+                    kkSocket.getout().println(myFTPcommand);
+                    System.out.print("<-- ");
                     printResponse();
                     break;
                 }
