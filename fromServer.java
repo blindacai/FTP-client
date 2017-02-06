@@ -127,4 +127,8 @@ public class fromServer {
     private int getPort(String[] info){
         return Integer.parseInt(info[4])*256 + Integer.parseInt(info[5]);
     }
+
+    public Command getCommand(){
+        return this.command;
+    }
 }

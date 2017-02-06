@@ -23,6 +23,9 @@ public class MainFTP {
             System.out.print("csftp> ");
             fromUser = stdIn.readLine();
             server.takeInput(fromUser);
+            if(server.getCommand().getUserinput_command().equals("quit")){
+                break;
+            }
         }
     }
 }
