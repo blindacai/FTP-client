@@ -1,4 +1,4 @@
-import java.io.IOException;
+import java.io.*;
 
 /**
  * Created by linda on 2/4/2017.
@@ -30,15 +30,17 @@ public class fromServer {
     }
 
     public void takeInput(String userInput) throws IOException {
-        if(!command.specialCommand(userInput)){
-            command.setUserinput(userInput);
+        command.setUserinput(userInput);
+
+        if(!command.specialCommand(command.getUserinput_command())){
             kkSocket.getout().println(command.getFTPcommand());
             printResponse();
         }
-        else if(command.commandExist(userInput)){
+        else if(command.commandExist(command.getUserinput_command())){
             specialInput(userInput);
         }
     }
+
 
     private void specialInput(String userInput) throws IOException {
         kkSocket.getout().println(PASV);
@@ -50,12 +52,28 @@ public class fromServer {
         second_socket.createSocket();
 
         // send a second command
-        command.setUserinput(userInput);
         kkSocket.getout().println(command.getFTPcommand());
 
         printResponse();
-        printSpecial(second_socket);
+        if(command.getUserinput_command().equals("dir")){
+            printSpecial(second_socket);
+        }
+        else{
+            getFile(second_socket, userInput);
+        }
         printResponse();
+    }
+
+    private void getFile(theSocket second_socket, String userInput) throws IOException {
+        command.setUserinput(userInput);
+        second_socket.getout().println("type i");
+        OutputStream oos = new FileOutputStream(new File(".\\" + command.getUserinput_var()));
+        int serverReponse;
+        while(( serverReponse = second_socket.getin().read() ) > -1){
+            oos.write((byte) serverReponse);
+            oos.flush();
+        }
+        oos.close();
     }
 
     private String getIP(String[] info){

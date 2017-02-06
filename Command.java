@@ -45,4 +45,12 @@ public class Command {
         this.userinput_var = null;
         return temp;
     }
+
+    public String getUserinput_command(){
+        return this.userinput_command;
+    }
+
+    public String getUserinput_var(){
+        return this.userinput_var;
+    }
 }

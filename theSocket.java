@@ -17,6 +17,7 @@ public class theSocket {
     public theSocket(String addr, int port) {
         this.addr = addr;
         this.port = port;
+
     }
 
     // may need try catch to deal with exceptions
@@ -33,5 +34,4 @@ public class theSocket {
     public BufferedReader getin(){
         return this.in;
     }
-
 }
