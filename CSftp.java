@@ -1,6 +1,7 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.UnknownHostException;
 
 /**
  * Created by linda on 2/2/2017.
@@ -21,7 +22,13 @@ public class CSftp {
         }
 
         theSocket kkSocket = new theSocket(hostname, port);
-        kkSocket.createSocket();
+        try{
+            kkSocket.createSocket();
+        }catch(UnknownHostException e){
+            System.out.println("0xFFFC Control connection to " + hostname + " on port " + port + " failed to open");
+            System.exit(0);
+        }
+
         Command command = new Command();
         fromServer server = new fromServer(kkSocket, command);
 

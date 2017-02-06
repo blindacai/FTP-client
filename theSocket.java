@@ -1,5 +1,6 @@
 import java.io.*;
 import java.net.Socket;
+import java.rmi.UnknownHostException;
 
 /**
  * Created by linda on 2/2/2017.
@@ -14,16 +15,17 @@ public class theSocket {
     public theSocket(String addr, int port) {
         this.addr = addr;
         this.port = port;
-
     }
 
     /*
         create a new socket connection
      */
-    public void createSocket() throws IOException {
+    public void createSocket() throws IOException, UnknownHostException{
         this.kkSocket = new Socket(this.addr, this.port);
         out = new PrintWriter(kkSocket.getOutputStream(), true);
         in = new BufferedReader(new InputStreamReader(kkSocket.getInputStream()));
+
+
     }
 
     public PrintWriter getout(){
