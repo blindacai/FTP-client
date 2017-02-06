@@ -7,9 +7,16 @@ import java.io.InputStreamReader;
  */
 public class CSftp {
     public static void main(String [] args) throws IOException {
-        //String hostname = args[0];
-        String hostname = "ftp.cs.ubc.ca";
-        int port = 21;
+        String hostname= null;
+        int port;
+
+        try{
+            hostname = args[0];
+            port = Integer.parseInt(args[1]);
+        }catch(ArrayIndexOutOfBoundsException e){
+            port = 21;
+        }
+
         theSocket kkSocket = new theSocket(hostname, port);
         kkSocket.createSocket();
         Command command = new Command();
