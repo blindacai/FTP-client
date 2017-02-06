@@ -24,8 +24,6 @@ public class theSocket {
         this.kkSocket = new Socket(this.addr, this.port);
         out = new PrintWriter(kkSocket.getOutputStream(), true);
         in = new BufferedReader(new InputStreamReader(kkSocket.getInputStream()));
-
-
     }
 
     public PrintWriter getout(){

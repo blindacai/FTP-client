@@ -1,7 +1,4 @@
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
+import java.io.*;
 
 
 /**
@@ -95,14 +92,19 @@ public class fromServer {
     */
     private void getFile(theSocket second_socket, String userInput) throws IOException {
         command.setUserinput(userInput);
-        OutputStream oos = new FileOutputStream(new File("./" + command.getUserinput_var()));
-        byte[] buf = new byte[10];
-        int offset = 0;
-        while ((offset = second_socket.getinputstream().read(buf, 0, buf.length)) > 0) {
-            oos.write(buf, 0, offset);
-            oos.flush();
+        OutputStream oos = null;
+        try{
+            oos = new FileOutputStream(new File("./" + command.getUserinput_var()));
+            byte[] buf = new byte[10];
+            int offset = 0;
+            while ((offset = second_socket.getinputstream().read(buf, 0, buf.length)) > 0) {
+                oos.write(buf, 0, offset);
+                oos.flush();
+            }
+            oos.close();
+        }catch(FileNotFoundException e){
+            System.out.println("0x38E Access to local file " + command.getUserinput_var() + " denied");
         }
-        oos.close();
     }
 
     /*
