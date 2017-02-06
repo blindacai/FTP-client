@@ -91,6 +91,10 @@ public class fromServer {
         theSocket second_socket = new theSocket(getIP(info), getPort(info));
         second_socket.createSocket();
 
+        // switch to binary mode
+        kkSocket.getout().println("type I");
+        printResponse();
+
         // send a second command
         kkSocket.getout().println(command.getFTPcommand());
 
@@ -106,11 +110,10 @@ public class fromServer {
 
     private void getFile(theSocket second_socket, String userInput) throws IOException {
         command.setUserinput(userInput);
-        second_socket.getout().println("type i");
-        OutputStream oos = new FileOutputStream(new File(".\\" + command.getUserinput_var()));
-        int serverReponse;
-        while(( serverReponse = second_socket.getin().read() ) > -1){
-            oos.write((byte) serverReponse);
+        OutputStream oos = new FileOutputStream(new File("./" + command.getUserinput_var()));
+        int reading;
+        while(( reading = second_socket.getin().read() ) > -1){
+            oos.write((byte) reading);
             oos.flush();
         }
         oos.close();
