@@ -29,8 +29,6 @@ public class fromServer {
                 kkSocket.getKkSocket().close();
                 System.exit(0);
             }
-
-
             System.out.println("<-- " + serverResponse);
         }while(Utils.notlastline(serverResponse));
     }
@@ -108,10 +106,10 @@ public class fromServer {
         try{
             OutputStream oos = new FileOutputStream(new File("./" + command.getUserinput_var()));
             byte[] buf = new byte[10];
-            int offset = 0;
+            int offset = 1;
             while ((offset = second_socket.getinputstream().read(buf, 0, buf.length)) > 0) {
                 //try{
-                    //ffset = second_socket.getinputstream().read(buf, 0, buf.length)
+                    //offset = second_socket.getinputstream().read(buf, 0, buf.length);
                 /*}catch(IOException e){
                     System.out.println("0x3A7 Data transfer connection I/O error, closing data connection.");
                     second_socket.getKkSocket().close();
