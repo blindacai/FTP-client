@@ -57,8 +57,8 @@ public class Command {
         return ftp command
      */
     public String getFTPcommand(){
-        String temp = this.map.get(this.userinput_command).toString().toUpperCase() + ( (this.userinput_var == null)? ""
-                : " " + this.userinput_var );
+        String temp = this.map.get(this.userinput_command).toString().toUpperCase() +
+                      ( (this.userinput_var == null)? "" : " " + this.userinput_var );
 
         this.userinput_var = null;
         return temp;

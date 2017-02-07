@@ -22,13 +22,7 @@ public class fromServer {
     public void printResponse() throws IOException {
         String serverResponse = "";
         do{
-            try{
-                serverResponse = kkSocket.getin().readLine();
-            }catch(IOException e){
-                System.out.println("0xFFFD Control connection I/O error, closing control connection.");
-                kkSocket.getKkSocket().close();
-                System.exit(0);
-            }
+            serverResponse = kkSocket.readAline();
             System.out.println("<-- " + serverResponse);
         }while(Utils.notlastline(serverResponse));
     }
@@ -68,7 +62,7 @@ public class fromServer {
     private void specialInput(String userInput) throws IOException {
         command.setUserinput(userInput);
         kkSocket.getout().println(PASV);
-        String serverRes = kkSocket.getin().readLine();
+        String serverRes = kkSocket.readAline();
         String[] info = Utils.IPandPort(serverRes).split(",");
 
         // a second socket
@@ -114,7 +108,7 @@ public class fromServer {
                 offset = second_socket.getinputstream().read(buf, 0, buf.length);
                 }catch(IOException e){
                     System.out.println("0x3A7 Data transfer connection I/O error, closing data connection.");
-                    second_socket.getKkSocket().close();
+                    second_socket.closeSocket();
                     break;
                 }
             }

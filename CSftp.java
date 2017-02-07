@@ -45,15 +45,14 @@ public class CSftp {
             try{
                 fromUser = stdIn.readLine();
             }catch(IOException e){
-                System.out.println("0xFFFE Input error while reading commands, terminating.");
-                System.exit(0);
+                Utils.errorMessage("FFFE");
             }
 
             if( !command.commandExist(fromUser) )
-                System.out.println("0x001 Invalid command.");
+                Utils.errorMessage("001");
 
             else if( !Utils.argumentChecker(fromUser) )
-                System.out.println("0x002 Incorrect number of arguments.");
+                Utils.errorMessage("002");
 
             else if(fromUser.equals("quit")){
                 break;

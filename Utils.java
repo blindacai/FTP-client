@@ -9,7 +9,7 @@ public class Utils {
     /*
         check if the current response is the last response
         argv: server response
-        return true if it's not, false if it is
+        return true if it's not, false otherwise
      */
     public static Boolean notlastline(String response){
         if(!getMatch("(\\d\\d\\d)", response).find())
@@ -22,7 +22,7 @@ public class Utils {
 
     /*
         argv: server response
-        return "142,103,6,49,227,166,227" part of passive mode response
+        return "142,103,6,49,227,166,227" part of the passive mode response
      */
     public static String IPandPort(String response){
         Matcher matcher = getMatch("\\((.*?)\\)", response);
@@ -63,5 +63,28 @@ public class Utils {
                 return result;
         }
         return result;
+    }
+
+    public static void errorMessage(String code){
+        switch(code){
+            case "001":
+                System.out.println("Invalid command.");
+                break;
+            case "002":
+                System.out.println("Incorrect number of arguments.");
+                break;
+            //case "38E ": System.out.println("Access to local file XXX denied.");
+            //case "FFFC": System.out.println("Control connection to xxx on port yyy failed to open.");
+            case "FFFD ":
+                System.out.println("Control connection I/O error, closing control connection.");
+                break;
+            //case "3A2 ": System.out.println("Data transfer connection to xxx on port yyy failed to open.");
+            case "3A7 ":
+                System.out.println("Data transfer connection I/O error, closing data connection.");
+                break;
+            case "FFFE  ":
+                System.out.println("Input error while reading commands, terminating.");
+                System.exit(0);
+        }
     }
 }

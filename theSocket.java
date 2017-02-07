@@ -20,10 +20,14 @@ public class theSocket {
     /*
         create a new socket connection
      */
-    public void createSocket() throws IOException, UnknownHostException{
-        this.kkSocket = new Socket(this.addr, this.port);
-        out = new PrintWriter(kkSocket.getOutputStream(), true);
-        in = new BufferedReader(new InputStreamReader(kkSocket.getInputStream()));
+    public void createSocket() throws IOException {
+        try{
+            this.kkSocket = new Socket(this.addr, this.port);
+            out = new PrintWriter(kkSocket.getOutputStream(), true);
+            in = new BufferedReader(new InputStreamReader(kkSocket.getInputStream()));
+        }catch (UnknownHostException e){
+            Utils.errorMessage("");
+        }
     }
 
     public PrintWriter getout(){
@@ -38,8 +42,29 @@ public class theSocket {
         return kkSocket.getInputStream();
     }
 
-    public Socket getKkSocket(){
-        return this.kkSocket;
+    /*
+        read a line from the server response
+     */
+    public String readAline(){
+        String result = null;
+        try{
+            result = in.readLine();
+        }catch(IOException e){
+            Utils.errorMessage("FFFD");
+            closeSocket();
+            System.exit(0);
+        }
+        return result;
     }
 
+    /*
+        close the socket
+     */
+    public void closeSocket(){
+        try{
+            this.kkSocket.close();
+        }catch(IOException e){
+            System.out.println("socket closed");
+        }
+    }
 }
