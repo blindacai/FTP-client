@@ -106,17 +106,17 @@ public class fromServer {
         try{
             OutputStream oos = new FileOutputStream(new File("./" + command.getUserinput_var()));
             byte[] buf = new byte[10];
-            int offset = 1;
-            while ((offset = second_socket.getinputstream().read(buf, 0, buf.length)) > 0) {
-                //try{
-                    //offset = second_socket.getinputstream().read(buf, 0, buf.length);
-                /*}catch(IOException e){
+            int offset = 0;
+            while (offset > -1) {
+                oos.write(buf, 0, offset);
+                oos.flush();
+                try{
+                offset = second_socket.getinputstream().read(buf, 0, buf.length);
+                }catch(IOException e){
                     System.out.println("0x3A7 Data transfer connection I/O error, closing data connection.");
                     second_socket.getKkSocket().close();
                     break;
-                }*/
-                oos.write(buf, 0, offset);
-                oos.flush();
+                }
             }
             oos.close();
         }catch(FileNotFoundException e){
