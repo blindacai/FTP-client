@@ -9,7 +9,7 @@ import java.net.UnknownHostException;
  */
 public class CSftp {
     public static void main(String [] args) throws IOException {
-        String hostname= null;
+        String hostname = null;
         int port;
 
         /*
