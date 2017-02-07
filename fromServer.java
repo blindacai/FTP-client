@@ -19,20 +19,20 @@ public class fromServer {
         print server response
         deal with multi-line response
      */
-    public void printResponse() throws IOException {
+    public void printResponse(){
         String serverResponse = "";
         do{
-            serverResponse = kkSocket.readAline();
+            serverResponse = kkSocket.readTheLine();
             System.out.println("<-- " + serverResponse);
         }while(Utils.notlastline(serverResponse));
     }
 
     /*
-        print server response of command "dir"
+        print server response of command "dir"; get response from data connection
      */
-    private void printSpecial(theSocket second_socket) throws IOException {
+    private void printSpecial(theSocket second_socket){
         String serverReponse;
-        while(( serverReponse = second_socket.getin().readLine() ) != null){
+        while(( serverReponse = second_socket.readDataLine() ) != null){
             System.out.println(serverReponse);
         }
     }
@@ -62,7 +62,7 @@ public class fromServer {
     private void specialInput(String userInput) throws IOException {
         command.setUserinput(userInput);
         kkSocket.getout().println(PASV);
-        String serverRes = kkSocket.readAline();
+        String serverRes = kkSocket.readTheLine();
         String[] info = Utils.IPandPort(serverRes).split(",");
 
         // a second socket
@@ -96,21 +96,14 @@ public class fromServer {
     */
     private void getFile(theSocket second_socket, String userInput) throws IOException {
         command.setUserinput(userInput);
-         //oos = null;
         try{
             OutputStream oos = new FileOutputStream(new File("./" + command.getUserinput_var()));
             byte[] buf = new byte[10];
-            int offset = 0;
-            while (offset > -1) {
-                oos.write(buf, 0, offset);
+            int toread = 0;
+            while (toread > -1) {
+                oos.write(buf, 0, toread);
                 oos.flush();
-                try{
-                offset = second_socket.getinputstream().read(buf, 0, buf.length);
-                }catch(IOException e){
-                    System.out.println("0x3A7 Data transfer connection I/O error, closing data connection.");
-                    second_socket.closeSocket();
-                    break;
-                }
+                toread = second_socket.readChar(buf);
             }
             oos.close();
         }catch(FileNotFoundException e){

@@ -45,16 +45,44 @@ public class theSocket {
     /*
         read a line from the server response
      */
-    public String readAline(){
+    public String readAline(String msg){
         String result = null;
         try{
             result = in.readLine();
         }catch(IOException e){
-            Utils.errorMessage("FFFD");
+            Utils.errorMessage(msg);
             closeSocket();
             System.exit(0);
         }
         return result;
+    }
+
+    /*
+        read a line from the command server response
+     */
+    public String readTheLine(){
+        return readAline("FFFD");
+    }
+
+    /*
+        read a line from the data connection response
+     */
+    public String readDataLine(){
+        return readAline("3A7");
+    }
+
+    /*
+        read some byte from the data connection response
+     */
+    public int readChar(byte[] buf) throws IOException{
+        int toread = 0;
+        try{
+            toread = this.kkSocket.getInputStream().read(buf, 0, buf.length);
+        }catch(IOException e){
+            Utils.errorMessage("3A7");
+            kkSocket.close();
+        }
+        return toread;
     }
 
     /*
