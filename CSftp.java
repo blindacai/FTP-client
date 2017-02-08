@@ -1,14 +1,12 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.ConnectException;
-import java.net.UnknownHostException;
 
 /**
  * Created by linda on 2/2/2017.
  */
 public class CSftp {
-    public static void main(String [] args) throws IOException {
+    public static void main(String [] args){
         String hostname = null;
         int port;
 
@@ -22,14 +20,10 @@ public class CSftp {
             port = 21;
         }
 
+        // connect to command socket
         theSocket kkSocket = new theSocket(hostname, port);
-        try{
-            kkSocket.createSocket();
-        }catch(UnknownHostException e){
-            handleException(hostname, port);
-        }catch(ConnectException e){
-            handleException(hostname, port);
-        }
+        Utils.setIPandPort(hostname, port);
+        kkSocket.createSocket("command");
 
 
         Command command = new Command();
@@ -60,10 +54,5 @@ public class CSftp {
 
             else server.takeInput(fromUser);
         }
-    }
-
-    public static void handleException(String hostname, int port){
-        System.out.println("0xFFFC Control connection to " + hostname + " on port " + port + " failed to open");
-        System.exit(0);
     }
 }

@@ -1,6 +1,8 @@
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.net.Socket;
-import java.rmi.UnknownHostException;
 
 /**
  * Created by linda on 2/2/2017.
@@ -20,13 +22,20 @@ public class theSocket {
     /*
         create a new socket connection
      */
-    public void createSocket() throws IOException {
+    public void createSocket(String whichConnection){
         try{
             this.kkSocket = new Socket(this.addr, this.port);
             out = new PrintWriter(kkSocket.getOutputStream(), true);
             in = new BufferedReader(new InputStreamReader(kkSocket.getInputStream()));
-        }catch (UnknownHostException e){
-            Utils.errorMessage("");
+        }catch (IOException e){
+            if(whichConnection.equals("command")){
+                Utils.errorMessage("FFFC");
+                System.exit(0);
+            }
+            else{
+                Utils.errorMessage("3A2");
+                this.closeSocket();
+            }
         }
     }
 
@@ -36,10 +45,6 @@ public class theSocket {
 
     public BufferedReader getin(){
         return this.in;
-    }
-
-    public InputStream getinputstream() throws IOException {
-        return kkSocket.getInputStream();
     }
 
     /*
@@ -52,13 +57,15 @@ public class theSocket {
         }catch(IOException e){
             Utils.errorMessage(msg);
             closeSocket();
-            System.exit(0);
+
+            if(msg.equals("FFFD"))
+                System.exit(0);
         }
         return result;
     }
 
     /*
-        read a line from the command server response
+        read a line from the command connection response
      */
     public String readTheLine(){
         return readAline("FFFD");
@@ -74,13 +81,13 @@ public class theSocket {
     /*
         read some byte from the data connection response
      */
-    public int readChar(byte[] buf) throws IOException{
+    public int readChar(byte[] buf) {
         int toread = 0;
         try{
             toread = this.kkSocket.getInputStream().read(buf, 0, buf.length);
         }catch(IOException e){
             Utils.errorMessage("3A7");
-            kkSocket.close();
+            closeSocket();
         }
         return toread;
     }

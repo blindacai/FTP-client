@@ -40,7 +40,7 @@ public class fromServer {
     /*
         feed user input to ftp server
      */
-    public void takeInput(String userInput) throws IOException {
+    public void takeInput(String userInput){
         command.setUserinput(userInput);
 
         String userinput_command = command.getUserinput_command();
@@ -59,20 +59,15 @@ public class fromServer {
     /*
         when user input is "dir" or "get"
      */
-    private void specialInput(String userInput) throws IOException {
+    private void specialInput(String userInput){
         command.setUserinput(userInput);
         kkSocket.getout().println(PASV);
         String serverRes = kkSocket.readTheLine();
         String[] info = Utils.IPandPort(serverRes).split(",");
 
         // a second socket
-        theSocket second_socket = new theSocket(getIP(info), getPort(info));
-        try{
-            second_socket.createSocket();
-        }catch(IOException e){
-            System.out.println("0x3A2 Data transfer connection to " + getIP(info) + " " + getPort(info) + " failed to open.");
-            System.exit(0);
-        }
+        theSocket second_socket = new theSocket(Utils.getIP(info), Utils.getPort(info));
+        second_socket.createSocket("data");
 
         // switch to binary mode
         kkSocket.getout().println("type I");
@@ -80,7 +75,6 @@ public class fromServer {
 
         // send a second command
         kkSocket.getout().println(command.getFTPcommand());
-
         printResponse();
         if(command.getUserinput_command().equals("dir")){
             printSpecial(second_socket);
@@ -94,44 +88,19 @@ public class fromServer {
     /*
     transfer file to local machine
     */
-    private void getFile(theSocket second_socket, String userInput) throws IOException {
+    private void getFile(theSocket second_socket, String userInput) {
         command.setUserinput(userInput);
         try{
             OutputStream oos = new FileOutputStream(new File("./" + command.getUserinput_var()));
             byte[] buf = new byte[10];
-            int toread = 0;
-            while (toread > -1) {
+            int toread;
+            while ((toread = second_socket.readChar(buf)) > -1) {
                 oos.write(buf, 0, toread);
                 oos.flush();
-                toread = second_socket.readChar(buf);
             }
             oos.close();
-        }catch(FileNotFoundException e){
+        }catch(IOException e){
             System.out.println("0x38E Access to local file " + command.getUserinput_var() + " denied");
         }
-    }
-
-    /*
-        parse ip from pasv mode response
-        return ip address for the second data connection
-     */
-    private String getIP(String[] info){
-        String ip = "";
-        for(int i = 0; i < 3; i++){
-            ip += info[i] + ".";
-        }
-        return ip + info[3];
-    }
-
-    /*
-        parse port from pasv mode response
-        return port number
-     */
-    private int getPort(String[] info){
-        return Integer.parseInt(info[4])*256 + Integer.parseInt(info[5]);
-    }
-
-    public Command getCommand(){
-        return this.command;
     }
 }

@@ -5,6 +5,8 @@ import java.util.regex.Pattern;
  * Created by linda on 2/3/2017.
  */
 public class Utils {
+    static String ip_addr;
+    static int port_number;
 
     /*
         check if the current response is the last response
@@ -41,6 +43,28 @@ public class Utils {
     }
 
     /*
+    parse ip from pasv mode response
+    return ip address for the second data connection
+ */
+    public static String getIP(String[] info){
+        String ip = "";
+        for(int i = 0; i < 3; i++){
+            ip += info[i] + ".";
+        }
+        ip_addr = ip + info[3];
+        return ip_addr;
+    }
+
+    /*
+        parse port from pasv mode response
+        return port number
+     */
+    public static int getPort(String[] info){
+        port_number = Integer.parseInt(info[4])*256 + Integer.parseInt(info[5]);
+        return port_number;
+    }
+
+    /*
         return true when the number of arguments provided by the user is correct, false otherwise
      */
     public static boolean argumentChecker(String userInput){
@@ -73,12 +97,13 @@ public class Utils {
             case "002":
                 System.out.println("Incorrect number of arguments.");
                 break;
-            //case "38E ": System.out.println("Access to local file XXX denied.");
-            //case "FFFC": System.out.println("Control connection to xxx on port yyy failed to open.");
+            case "FFFC":
+                System.out.println("Control connection to " + ip_addr + " on port" + port_number + " failed to open.");
             case "FFFD ":
                 System.out.println("Control connection I/O error, closing control connection.");
                 break;
-            //case "3A2 ": System.out.println("Data transfer connection to xxx on port yyy failed to open.");
+            case "3A2 ":
+                System.out.println("Data transfer connection to " + ip_addr + " on port" + port_number + " failed to open.");
             case "3A7 ":
                 System.out.println("Data transfer connection I/O error, closing data connection.");
                 break;
@@ -86,5 +111,10 @@ public class Utils {
                 System.out.println("Input error while reading commands, terminating.");
                 System.exit(0);
         }
+    }
+
+    public static void setIPandPort(String ip, int port){
+        ip_addr = ip;
+        port_number = port;
     }
 }
