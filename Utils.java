@@ -97,23 +97,23 @@ public class Utils {
     public static void errorMessage(String code){
         switch(code){
             case "001":
-                System.out.println("Invalid command.");
+                System.out.println("0x001 Invalid command.");
                 break;
             case "002":
-                System.out.println("Incorrect number of arguments.");
+                System.out.println("0x002 Incorrect number of arguments.");
                 break;
             case "FFFC":
-                System.out.println("Control connection to " + ip_addr + " on port" + port_number + " failed to open.");
+                System.out.println("0xFFFC Control connection to " + ip_addr + " on port" + port_number + " failed to open.");
             case "FFFD ":
-                System.out.println("Control connection I/O error, closing control connection.");
+                System.out.println("0xFFFD Control connection I/O error, closing control connection.");
                 break;
             case "3A2 ":
-                System.out.println("Data transfer connection to " + ip_addr + " on port" + port_number + " failed to open.");
+                System.out.println("0x3A2 Data transfer connection to " + ip_addr + " on port" + port_number + " failed to open.");
             case "3A7 ":
-                System.out.println("Data transfer connection I/O error, closing data connection.");
+                System.out.println("0x3A7 Data transfer connection I/O error, closing data connection.");
                 break;
             case "FFFE  ":
-                System.out.println("Input error while reading commands, terminating.");
+                System.out.println("0xFFFE Input error while reading commands, terminating.");
                 System.exit(0);
         }
     }
