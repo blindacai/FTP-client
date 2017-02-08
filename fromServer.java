@@ -76,6 +76,9 @@ public class fromServer {
         // send a second command
         kkSocket.getout().println(command.getFTPcommand());
         printResponse();
+        if(Integer.parseInt(Utils.response_code) == 550)
+            return;
+
         if(command.getUserinput_command().equals("dir")){
             printSpecial(second_socket);
         }

@@ -7,6 +7,7 @@ import java.util.regex.Pattern;
 public class Utils {
     static String ip_addr;
     static int port_number;
+    static String response_code = "0";
 
     /*
         check if the current response is the last response
@@ -14,8 +15,12 @@ public class Utils {
         return true if it's not, false otherwise
      */
     public static Boolean notlastline(String response){
-        if(!getMatch("(\\d\\d\\d)", response).find())
+        Matcher matcher = getMatch("(\\d\\d\\d)", response);
+        if(!matcher.find())
             return true;
+        else
+            response_code = matcher.group(0);
+
         if(getMatch("(-)", response).find())
             return true;
         else
